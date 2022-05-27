@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wacky Widgets</title>
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
+</head>
+<body>
+    <h1>Wacky Widgets</h1>
+    {% if widgets_list%}
+    <table class='pure-table pure-table-striped'>
+        <tr>
+            <thead>
+                <th>Description</th>
+                <th>Quantity</th>
+                <th>Delete</th>
+            </thead>
+        </tr>
+        {% for w in widgets_list  %}
+        <tr>
+            <td>{{ w.description}}</td>
+            <td>{{ w.quantity }}</td>
+            <td><a href="{% url 'delete' w.id %}">X</a></td>
+            {% endfor %}
+        </tr>
+        <tr>
+            <td>Total Quantity</td>    
+            <td>{{t.quantity__sum}}
+            <td></td>
+            
+        </tr>
+ 
+    </table>
+    {% else %}
+    <h3>No Widgets Exist</h1>
+    {% endif %}
+    <hr/>
+    <h4> Add Widget</h4>
+    <form action="{% url 'create' %}" method='POST' class='pureform'>
+        {% csrf_token%}
+        {{widget_form.as_p}}
+        <button type='submit' class='pure-button'> ADD WIDGET </button>
+    </form>
+</body>
+</html>
